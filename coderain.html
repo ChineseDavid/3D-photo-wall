@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    *{
+      margin: 0;padding: 0;
+    }
+    body{
+      overflow: hidden;
+      background: black;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="can"></canvas>
+  <script>
+    let can=document.querySelector('#can');
+    let cxt=can.getContext('2d');
+    let w=window.innerWidth;
+    let h=window.innerHeight;
+    let num=Math.floor(w/16);
+    can.setAttribute("width", w);
+    can.setAttribute("height", h);
+    cxt.font='16px 微软雅黑'
+    cxt.fillStyle='white';
+    cxt.fillText('123',20,20)
+    let arr=[];
+    for(let i=0;i<num;i++){
+      arr[i]=0;
+    }
+    function color(){
+      let r=Math.floor(Math.random()*256);
+      let g=Math.floor(Math.random()*256);
+      let b=Math.floor(Math.random()*256);
+      return `rgb(${r},${g},${b})`;
+    }
+    function draw(){
+      cxt.fillStyle='rgba(0,0,0,.05)'
+      cxt.fillRect(0,0,w,h);
+      for(let i=0;i<num;i++){
+        let x=16*i;
+        let y=16*arr[i];
+        let n=Math.floor(Math.random()*2)
+        cxt.fillStyle=color();
+        cxt.fillText(n,x,y);
+        if(16*arr[i]>h&&Math.random()>0.99){
+          arr[i]=0;
+        }
+        arr[i]++;
+      }
+    }
+    setInterval(draw,20)
+  </script>
+</body>
+</html>

@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Photo Wall</title>
+  <style>
+    .kuai{
+      width: 100px;
+      height: 100px;
+      position: absolute;
+      top: 0;
+      /* left: 50px; */
+      transform-style: preserve-3d;
+    }
+    .mian{
+      width: 100px;
+      height: 100px;
+      background: rgba(0,255,0,.2);
+      position: absolute;
+      /* top: 50px; */
+      color: white;
+      font-size: 50px;
+      text-align: center;
+      line-height: 100px;
+      /* -moz-user-select: -moz-none;
+      -khtml-user-select: none;
+      -webkit-user-select: none;
+      -o-user-select: none;
+      user-select: none; */
+      transition: all .5s;
+    }
+    body{
+      -moz-user-select: -moz-none;
+      -khtml-user-select: none;
+      -webkit-user-select: none;
+      -o-user-select: none;
+      user-select: none;
+    }
+    .mian:nth-child(1){
+      transform: rotateY(90deg) rotateZ(-90deg) translateZ(50px);
+    }
+    .mian:nth-child(2){
+      transform: rotateY(90deg) rotateZ(-90deg) translateZ(-50px);
+    }
+    .mian:nth-child(3){
+      transform: rotateX(90deg) rotateZ(180deg) translateZ(50px);
+    }
+    .mian:nth-child(4){
+      transform: rotateX(90deg) rotateZ(180deg) translateZ(-50px);
+    }
+    .mian:nth-child(5){
+      transform: rotateZ(-90deg) translateZ(50px);
+    }
+    .mian:nth-child(6){
+      transform: rotateZ(90deg) translateZ(-50px);
+    }
+    .kuai:hover .mian:nth-child(1){
+      transform: rotateY(90deg) rotateZ(-90deg) translateZ(100px) scale(1.5);
+    }
+    .kuai:hover .mian:nth-child(2){
+      transform: rotateY(90deg) rotateZ(-90deg) translateZ(-100px) scale(1.5);
+    }
+    .kuai:hover .mian:nth-child(3){
+      transform: rotateX(90deg) rotateZ(180deg) translateZ(100px) scale(1.5);
+    }
+    .kuai:hover .mian:nth-child(4){
+      transform: rotateX(90deg) rotateZ(180deg) translateZ(-100px) scale(1.5);
+    }
+    .kuai:hover .mian:nth-child(5){
+      transform: rotateZ(-90deg) translateZ(100px) scale(1.5);
+    }
+    .kuai:hover .mian:nth-child(6){
+      transform: rotateZ(90deg) translateZ(-100px) scale(1.5);
+    }
+    .main{
+      width: 100px;
+      height:100px;
+      margin: 300px auto;
+      position: relative;
+      transform-style: preserve-3d;
+      transform: rotateX(73deg) rotateZ(0deg);
+    }
+    .kuai:nth-child(1){
+      transform: translateX(400px) rotateX(0deg) rotateY(0deg) rotateZ(104deg);
+    }
+    .kuai:nth-child(2){
+      transform: translate(283px,283px) rotateX(0deg) rotateY(0deg) rotateZ(104deg);
+    }
+    .kuai:nth-child(3){
+      transform: translateY(400px) rotateX(0deg) rotateY(0deg) rotateZ(104deg);
+    }
+    .kuai:nth-child(4){
+      transform: translate(-283px,283px) rotateX(0deg) rotateY(0deg) rotateZ(104deg);
+    }
+    .kuai:nth-child(5){
+      transform: translateX(-400px) rotateX(0deg) rotateY(0deg) rotateZ(104deg);
+    }
+    .kuai:nth-child(6){
+      transform: translate(-283px,-283px) rotateX(0deg) rotateY(0deg) rotateZ(104deg);
+    }
+    .kuai:nth-child(7){
+      transform: translateY(-400px) rotateX(0deg) rotateY(0deg) rotateZ(104deg);
+    }
+    .kuai:nth-child(8){
+      transform: translate(283px,-283px) rotateX(0deg) rotateY(0deg) rotateZ(104deg);
+    }
+    .text{
+      position: absolute;
+      top: 300px;
+      line-height: 90px;
+      font-size: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-weight: 900;
+      text-shadow: 0 0 20px rgba(0, 153, 255, 0.842);
+      color: white;
+      animation: sha 5s 0s infinite linear;
+    }
+    @keyframes sha{
+      0%{
+        text-shadow: 0 0 5px rgba(0, 153, 255, 0.842);
+        color: white;
+      }
+      50%{
+        text-shadow: 0 0 20px rgba(0, 153, 255, 0.842);
+        color: rgba(0, 153, 255, 0.842);
+      }
+      100%{
+        text-shadow: 0 0 5px rgba(0, 153, 255, 0.842);
+        color: white;
+      }
+    }
+    body{
+      background: black;
+    }
+    .mengb,html,body,.all{
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    .all{
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    .kuais,.kuaib{
+      transform-style: preserve-3d;
+      width: 100px;
+      height: 100px;
+    }
+    .speed,.btn{
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      overflow: hidden;
+      color: white;
+    }
+    .speed{
+      top:80px;
+    }
+    .speed span,.speed div{
+      font-size: 20px;
+      float: left;
+      padding:5px;
+      line-height: 20px;
+    }
+    .btnjia,.btnjian{
+      width: 30px;
+      height: 30px;
+      text-align: center;
+      box-sizing: border-box;
+      border-radius: 5px;
+    }
+    .speed div{
+      margin-right: 20px;
+    }
+    .btnjia,.btnjian{
+      background: rgba(0, 153, 255, 0.642);
+    }
+    .speed .sspeed{
+      width: 30px;
+      height: 30px;
+      text-align: center;
+    }
+    .btn span,.btnmain,.btnkuai{
+      font-size: 20px;
+      float: left;
+      margin-right: 10px;
+      padding: 5px;
+      background: rgba(0, 153, 255, 0.642);
+      border-radius: 5px;
+    }
+    .btn span{
+      background: none;
+    }
+    .reset,.btnjia,.btnjian,.btnmain:hover,.btnkuai:hover{
+      cursor: pointer;
+    }
+    #can{
+      position: absolute;
+      top:0;
+      left: 0;
+    }
+    .mengb{
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding:50px 100px;
+      background: rgba(0,0,0,.5);
+      box-sizing: border-box;
+      display: none;
+    }
+    .mengb p,.back{
+      color:white;
+      font-size: 50px;
+    }
+    .back{
+      position: absolute;
+      top:100px;
+      right: 100px;
+      color: red;
+    }
+    .back:hover{
+      cursor: pointer;
+    }
+    .mengb img{
+      float: left;
+      margin-right: 20px;
+      margin-bottom: 20px;
+    }
+    .mbimg{
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+    .reset{
+      padding: 5px;
+      color: white;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 20px;
+      border-radius: 5px;
+      background: rgba(0, 153, 255, 0.642);
+    }
+  </style>
+</head>
+<body>
+  <canvas id="can"></canvas>
+  <div class="main" aria-disabled="true">
+    <div class="kuai">
+      <div class="kuaib">
+        <div class="mian"><img src="./img/bear/bear1m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/bear/bear2m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/bear/bear3m.jpeg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/bear/bear4m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/bear/bear5m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/bear/bear6m.png" width="100%" height="100%"></div>
+      </div>
+    </div>
+    <div class="kuai">
+      <div class="kuaib">
+        <div class="mian"><img src="./img/cat/cat1m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/cat/cat2m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/cat/cat3m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/cat/cat4m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/cat/cat5m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/cat/cat6m.jpg" width="100%" height="100%"></div>
+      </div>
+    </div>
+    <div class="kuai">
+      <div class="kuaib">
+        <div class="mian"><img src="./img/dog/dog1m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/dog/dog2m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/dog/dog3m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/dog/dog4m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/dog/dog5m.png" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/dog/dog6m.jpg" width="100%" height="100%"></div>
+      </div>
+    </div>
+    <div class="kuai">
+      <div class="kuaib">
+        <div class="mian"><img src="./img/dolpthin/dol1m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/dolpthin/dol2m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/dolpthin/dol3m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/dolpthin/dol4m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/dolpthin/dol5m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/dolpthin/dol6m.jpg" width="100%" height="100%"></div>
+      </div>
+    </div>
+    <div class="kuai">
+      <div class="kuaib">
+        <div class="mian"><img src="./img/lion/lion1m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/lion/lion2m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/lion/lion3m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/lion/lion4m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/lion/lion5m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/lion/lion6m.jpg" width="100%" height="100%"></div>
+      </div>
+    </div>
+    <div class="kuai">
+      <div class="kuaib">
+        <div class="mian"><img src="./img/penguin/pen1m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/penguin/pen2m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/penguin/pen3m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/penguin/pen4m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/penguin/pen5m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/penguin/pen6m.jpg" width="100%" height="100%"></div>
+      </div>
+    </div>
+    <div class="kuai">
+      <div class="kuaib">
+        <div class="mian"><img src="./img/seal/seal1m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/seal/seal2m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/seal/seal3m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/seal/seal4m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/seal/seal5m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/seal/seal6m.jpg" width="100%" height="100%"></div>
+      </div>
+    </div>
+    <div class="kuai">
+      <div class="kuaib">
+        <div class="mian"><img src="./img/tiger/tiger1m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/tiger/tiger2m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/tiger/tiger3m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/tiger/tiger4m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/tiger/tiger5m.jpg" width="100%" height="100%"></div>
+        <div class="mian"><img src="./img/tiger/tiger6m.jpg" width="100%" height="100%"></div>
+      </div>
+    </div>
+  </div>
+  <div class="text">3D Photo Wall</div>
+  <div class="btn">
+    <span>control：</span>
+    <div class="btnmain">above</div>
+    <div class="btnkuai">personal</div>
+  </div>
+  <div class="speed">
+    <span>speed：</span>
+    <div class="btnjia">+</div>
+    <div class="sspeed">7</div>
+    <div class="btnjian">-</div>
+  </div>
+  <div class="reset">reset</div>
+  <div class="mengb">
+    <p class="mbtext">Bear</p>
+    <div class="back">X</div>
+    <div class="mbimg">
+      <img src="./img/bear/bear1.jpg" height="200">
+      <img src="./img/bear/bear2.jpg" height="200">
+      <img src="./img/bear/bear3.jpeg" height="200">
+      <img src="./img/bear/bear4.jpg" height="200">
+      <img src="./img/bear/bear5.jpg" height="200">
+      <img src="./img/bear/bear6.png" height="200">
+    </div>
+  </div>
+  <script>
+    const a=document.querySelector('.main');//主体
+    const b=document.querySelector('body');
+    const c=document.querySelectorAll('.kuaib');//包裹正方体的div
+    const d=document.querySelector('.btnkuai');//person按钮
+    const e=document.querySelector('.btnmain');//above按钮
+    d.setAttribute('style','background:rgba(0, 153, 255, 0.842)')
+    d.onclick=function(){
+      con='kuai';
+      e.setAttribute('style','background:rgba(0, 153, 255, 0.642)')
+      d.setAttribute('style','background:rgba(0, 153, 255, 0.842)')
+    }
+    e.onclick=function(){
+      con='main';
+      d.setAttribute('style','background:rgba(0, 153, 255, 0.642)')
+      e.setAttribute('style','background:rgba(0, 153, 255, 0.842)')
+    }
+    let con='kuai';
+    let num=0;
+    let numx=0;
+    let numy=0;
+    let speed=4;
+    const btnjia=document.querySelector('.btnjia');
+    const btnjian=document.querySelector('.btnjian');
+    const sspeed=document.querySelector('.sspeed');
+    btnjia.onclick=function(){//增加速度
+      sspeed.innerHTML++;
+      sspeed.innerHTML>19?sspeed.innerHTML=19:sspeed.innerHTML;
+      sspeed.innerHTML>10?speed=1-(sspeed.innerHTML-10)/10:speed=11-sspeed.innerHTML;
+      btnjia.style.backgroundColor='rgba(0, 153, 255, 0.842)'
+      setTimeout(()=>{btnjia.style.backgroundColor='rgba(0, 153, 255, 0.642)'},100)
+      console.log(speed)
+    }
+    btnjian.onclick=function(){//减小速度
+      sspeed.innerHTML--;
+      sspeed.innerHTML<1?sspeed.innerHTML=1:sspeed.innerHTML;
+      sspeed.innerHTML>10?speed=1-(sspeed.innerHTML-10)/10:speed=11-sspeed.innerHTML;
+      btnjian.style.backgroundColor='rgba(0, 153, 255, 0.842)'
+      setTimeout(()=>{btnjian.style.backgroundColor='rgba(0, 153, 255, 0.642)'},100)
+      console.log(speed)
+    }
+    const reset=document.querySelector('.reset')//重置位置按钮
+    reset.onclick=function(){//重置位置
+      reset.style.backgroundColor='rgba(0, 153, 255, 0.842)';
+      setTimeout(()=>{reset.style.backgroundColor='rgba(0, 153, 255, 0.642)'},100);
+      num=0;
+      numx=0;
+      numy=0;
+      for(let i=0;i<c.length;i++){
+        c[i].style.transform='rotateX('+0+'deg) rotateY('+numy+'deg) rotateZ('+numx+'deg)'
+      }
+      a.style.transform='rotateX(73deg) rotateZ('+num+'deg)'
+    }
+    b.onmousedown=function(e){
+        const sx=e.screenX;
+        const sy=e.screenY;
+        let lastex=sx;
+        let lastey=sy;
+      b.onmousemove=function(e){//鼠标移动事件
+        const ex=e.screenX;
+        const ey=e.screenY;
+        if(con=='main'){//全部旋转状态
+          num+=(ex-lastex)/speed;
+          a.style.transform='rotateX(73deg) rotateZ('+num+'deg)'
+        }else if(con=='kuai'){//个体旋转状态
+          numx+=(ex-lastex)/speed;
+          numy+=(ey-lastey)/speed;
+          for(let i=0;i<c.length;i++){
+            c[i].style.transform='rotateX('+0+'deg) rotateY('+numy+'deg) rotateZ('+numx+'deg)'
+          }
+        }
+        lastex=ex;
+        lastey=ey;
+      };
+      b.onmouseup=function(){//移出事件
+        b.onmousemove='none';
+      }
+    }
+    let can=document.querySelector('#can');//canvas画布
+    let cxt=can.getContext('2d');//操作画布
+    let winw=window.innerWidth;//屏幕宽
+    let winh=window.innerHeight;//屏幕高
+    can.setAttribute("width", winw);//设置canvas宽
+    can.setAttribute("height", winh);//设置canvas高
+    function color(){//随机颜色函数
+      let r=Math.floor(Math.random()*256);
+      let g=Math.floor(Math.random()*256);
+      let b=Math.floor(Math.random()*256);
+      return `rgb(${r},${g},${b})`;
+    }
+    let starlist=[]//存放所有的球
+    makestar=function(){
+      let left=Math.floor(Math.random()*winw);//left值
+      let top=Math.floor(Math.random()*winh);//top值
+      let xj=Math.floor(Math.random()*10);//x轴随机变化值
+      let yj=Math.floor(Math.random()*10);//y轴随机变化值
+      let xjj=Math.floor(Math.random()*2);//x加还是减
+      let yjj=Math.floor(Math.random()*2);//y加还是减
+      let col=color();//随机颜色
+      starlist.push({//将这些值以对象的形式添加到数组中
+        left,top,xj,yj,xjj,yjj,col
+      })
+      return;
+    }
+    for(let i=0;i<100;i++){//制作球
+      makestar();
+    }
+    setInterval(()=>{//计时器
+      cxt.beginPath();
+      cxt.fillStyle='rgba(0,0,0,.05)';
+      cxt.fillRect(0,0,winw,winh);
+      cxt.closePath();//让页面颜色变浅
+      for(let i=0;i<starlist.length;i++){
+        starlist[i].left<0?starlist[i].xj=-starlist[i].xj:starlist[i].left;//超出边界，反弹
+        starlist[i].left>winw?starlist[i].xj=-starlist[i].xj:starlist[i].left;//超出边界，反弹
+        starlist[i].top<0?starlist[i].yj=-starlist[i].yj:starlist[i].top;//超出边界，反弹
+        starlist[i].top>winh?starlist[i].yj=-starlist[i].yj:starlist[i].top;//超出边界，反弹
+        if(starlist[i].xjj=='0'){//0就减变化值
+          starlist[i].left-=starlist[i].xj;
+        }else if(starlist[i].xjj=="1"){//1就加变化值
+          starlist[i].left+=starlist[i].xj
+        }
+        if(starlist[i].yjj=='0'){//0就减变化值
+          starlist[i].top-=starlist[i].yj;
+        }else if(starlist[i].yjj=="1"){//1就加变化值
+          starlist[i].top+=starlist[i].yj
+        }
+        cxt.beginPath();
+        cxt.arc(starlist[i].left,starlist[i].top,1,0,Math.PI*2,true);//画圆
+        cxt.fillStyle=starlist[i].col;//画圆的颜色
+        cxt.fill();//画圆填充
+        cxt.closePath();
+      }
+    },20)
+    let guan=document.querySelector('.back');
+    let mengb=document.querySelector('.mengb');
+    guan.onclick=function(){
+      mengb.style.display='none';
+    }
+    let mian=document.querySelectorAll('.mian');
+    let mbtext=document.querySelector('.mbtext')
+    for(let i=0;i<mian.length;i++){
+      mian[i].onclick=function(){
+        let imglist=this.parentNode.querySelectorAll('img');
+        let mbimg=mengb.querySelectorAll('img');
+        let tit=imglist[0].getAttribute('src').split('/')[imglist[0].getAttribute('src').split('/').length-2];
+        mbtext.innerHTML=tit;
+        for(let i=0;i<imglist.length;i++){
+          mbimg[i].setAttribute('src',imglist[i].getAttribute('src'));
+        }
+        for(let i=0;i<imglist.length;i++){//图片懒加载
+          let imgsave=imglist[i].getAttribute('src').split('/')[imglist[i].getAttribute('src').split('/').length-1].split('.')[0].slice(0,-1);
+          let imgsaveall=imglist[i].getAttribute('src').split('/');
+          imgsaveall[imglist[i].getAttribute('src').split('/').length-1]=
+          imgsave+'.'+imgsaveall[imglist[i].getAttribute('src').split('/').length-1].split('.')[1];
+          let iii=new Image();
+          iii.src=imgsaveall.join('/');
+          iii.onload=function(){
+            mbimg[i].setAttribute('src',imgsaveall.join('/'));
+          }
+        }
+        mengb.style.display='block';
+      }
+    }
+  </script>
+</body>
+</html>
