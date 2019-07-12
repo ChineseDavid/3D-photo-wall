@@ -186,7 +186,7 @@
       height: 30px;
       text-align: center;
     }
-    .btn span,.btnmain,.btnkuai{
+    .btn span,.btnmain,.btnkuai,.auto{
       font-size: 20px;
       float: left;
       margin-right: 10px;
@@ -197,7 +197,7 @@
     .btn span{
       background: none;
     }
-    .reset,.btnjia,.btnjian,.btnmain:hover,.btnkuai:hover{
+    .auto,.reset,.btnjia,.btnjian,.btnmain:hover,.btnkuai:hover{
       cursor: pointer;
     }
     #can{
@@ -345,6 +345,7 @@
     <span>control：</span>
     <div class="btnmain">above</div>
     <div class="btnkuai">personal</div>
+    <div class="auto">auto</div>
   </div>
   <div class="speed">
     <span>speed：</span>
@@ -374,42 +375,70 @@
     const c=document.querySelectorAll('.kuaib');//包裹正方体的div
     const d=document.querySelector('.btnkuai');//person按钮
     const e=document.querySelector('.btnmain');//above按钮
-    d.setAttribute('style','background:rgba(0, 153, 255, 0.842)')
-    d.onclick=function(){
+    const auto=document.querySelector('.auto');//above按钮
+    let autotime=false;
+    let con='main';
+    e.setAttribute('style','background:rgba(0, 153, 255, 0.842)');
+    //按钮点击控制-------------------------------------------------------------------
+    d.onclick=function(){//相对自身旋转
       con='kuai';
-      e.setAttribute('style','background:rgba(0, 153, 255, 0.642)')
-      d.setAttribute('style','background:rgba(0, 153, 255, 0.842)')
+      e.setAttribute('style','background:rgba(0, 153, 255, 0.642)');
+      auto.setAttribute('style','background:rgba(0, 153, 255, 0.642)');
+      d.setAttribute('style','background:rgba(0, 153, 255, 0.842)');
+      clearInterval(autotime);
+      autotime=false;
     }
-    e.onclick=function(){
+    e.onclick=function(){//相对整体旋转
       con='main';
-      d.setAttribute('style','background:rgba(0, 153, 255, 0.642)')
-      e.setAttribute('style','background:rgba(0, 153, 255, 0.842)')
+      d.setAttribute('style','background:rgba(0, 153, 255, 0.642)');
+      auto.setAttribute('style','background:rgba(0, 153, 255, 0.642)');
+      e.setAttribute('style','background:rgba(0, 153, 255, 0.842)');
+      clearInterval(autotime);
+      autotime=false;
     }
-    let con='kuai';
+    const sspeed=document.querySelector('.sspeed');
+    auto.onclick=function(){//自动旋转
+      con='auto';
+      d.setAttribute('style','background:rgba(0, 153, 255, 0.642)');
+      e.setAttribute('style','background:rgba(0, 153, 255, 0.642)');
+      auto.setAttribute('style','background:rgba(0, 153, 255, 0.842)');
+      if(autotime==false){//自动旋转
+        autotime=setInterval(() => {
+          num+=sspeed.innerHTML/3;
+          num>360?num-=360:num;
+          numx+=sspeed.innerHTML/3;
+          numx>360?numx-=360:numx;
+          numy+=sspeed.innerHTML/3;
+          numy>360?numy-=360:numy;
+          console.log(num,numx,numy);
+          for(let i=0;i<c.length;i++){
+            c[i].style.transform='rotateX('+0+'deg) rotateY('+numy+'deg) rotateZ('+numx+'deg)'
+          }
+          a.style.transform='rotateX(73deg) rotateZ('+num+'deg)';
+        }, 20);
+      }
+    }
     let num=0;
     let numx=0;
     let numy=0;
     let speed=4;
-    const btnjia=document.querySelector('.btnjia');
-    const btnjian=document.querySelector('.btnjian');
-    const sspeed=document.querySelector('.sspeed');
+    const btnjia=document.querySelector('.btnjia');//增加
+    const btnjian=document.querySelector('.btnjian');//减小
     btnjia.onclick=function(){//增加速度
       sspeed.innerHTML++;
       sspeed.innerHTML>19?sspeed.innerHTML=19:sspeed.innerHTML;
       sspeed.innerHTML>10?speed=1-(sspeed.innerHTML-10)/10:speed=11-sspeed.innerHTML;
-      btnjia.style.backgroundColor='rgba(0, 153, 255, 0.842)'
-      setTimeout(()=>{btnjia.style.backgroundColor='rgba(0, 153, 255, 0.642)'},100)
-      console.log(speed)
+      btnjia.style.backgroundColor='rgba(0, 153, 255, 0.842)';
+      setTimeout(()=>{btnjia.style.backgroundColor='rgba(0, 153, 255, 0.642)'},100);
     }
     btnjian.onclick=function(){//减小速度
       sspeed.innerHTML--;
       sspeed.innerHTML<1?sspeed.innerHTML=1:sspeed.innerHTML;
       sspeed.innerHTML>10?speed=1-(sspeed.innerHTML-10)/10:speed=11-sspeed.innerHTML;
-      btnjian.style.backgroundColor='rgba(0, 153, 255, 0.842)'
-      setTimeout(()=>{btnjian.style.backgroundColor='rgba(0, 153, 255, 0.642)'},100)
-      console.log(speed)
+      btnjian.style.backgroundColor='rgba(0, 153, 255, 0.842)';
+      setTimeout(()=>{btnjian.style.backgroundColor='rgba(0, 153, 255, 0.642)'},100);
     }
-    const reset=document.querySelector('.reset')//重置位置按钮
+    const reset=document.querySelector('.reset');//重置位置按钮
     reset.onclick=function(){//重置位置
       reset.style.backgroundColor='rgba(0, 153, 255, 0.842)';
       setTimeout(()=>{reset.style.backgroundColor='rgba(0, 153, 255, 0.642)'},100);
@@ -417,10 +446,11 @@
       numx=0;
       numy=0;
       for(let i=0;i<c.length;i++){
-        c[i].style.transform='rotateX('+0+'deg) rotateY('+numy+'deg) rotateZ('+numx+'deg)'
+        c[i].style.transform='rotateX('+0+'deg) rotateY('+numy+'deg) rotateZ('+numx+'deg)';
       }
-      a.style.transform='rotateX(73deg) rotateZ('+num+'deg)'
+      a.style.transform='rotateX(73deg) rotateZ('+num+'deg)';
     }
+    //鼠标移动控制---------------------------------------------------------------
     b.onmousedown=function(e){
         const sx=e.screenX;
         const sy=e.screenY;
@@ -431,12 +461,12 @@
         const ey=e.screenY;
         if(con=='main'){//全部旋转状态
           num+=(lastex-ex)/speed;
-          a.style.transform='rotateX(73deg) rotateZ('+num+'deg)'
+          a.style.transform='rotateX(73deg) rotateZ('+num+'deg)';
         }else if(con=='kuai'){//个体旋转状态
           numx+=(lastex-ex)/speed;
           numy+=(ey-lastey)/speed;
           for(let i=0;i<c.length;i++){
-            c[i].style.transform='rotateX('+0+'deg) rotateY('+numy+'deg) rotateZ('+numx+'deg)'
+            c[i].style.transform='rotateX('+0+'deg) rotateY('+numy+'deg) rotateZ('+numx+'deg)';
           }
         }
         lastex=ex;
@@ -446,6 +476,7 @@
         b.onmousemove='none';
       }
     }
+    //canvas背景-------------------------------------------------------------------------
     let can=document.querySelector('#can');//canvas画布
     let cxt=can.getContext('2d');//操作画布
     let winw=window.innerWidth;//屏幕宽
@@ -502,6 +533,7 @@
         cxt.closePath();
       }
     },20)
+    //蒙版--------------------------------------------------------------------------------
     let guan=document.querySelector('.back');
     let mengb=document.querySelector('.mengb');
     guan.onclick=function(){
