@@ -247,6 +247,13 @@
       border-radius: 5px;
       background: rgba(0, 153, 255, 0.642);
     }
+    .tip{
+      color: white;
+      position: absolute;
+      bottom: 40px;
+      right: 40px;
+      font-size: 20px;
+    }
   </style>
 </head>
 <body>
@@ -358,6 +365,9 @@
       <img src="./img/bear/bear6.png" height="200">
     </div>
   </div>
+  <div class="tip">
+    Try to click and move your mouse
+  </div>
   <script>
     const a=document.querySelector('.main');//主体
     const b=document.querySelector('body');
@@ -420,10 +430,10 @@
         const ex=e.screenX;
         const ey=e.screenY;
         if(con=='main'){//全部旋转状态
-          num+=(ex-lastex)/speed;
+          num+=(lastex-ex)/speed;
           a.style.transform='rotateX(73deg) rotateZ('+num+'deg)'
         }else if(con=='kuai'){//个体旋转状态
-          numx+=(ex-lastex)/speed;
+          numx+=(lastex-ex)/speed;
           numy+=(ey-lastey)/speed;
           for(let i=0;i<c.length;i++){
             c[i].style.transform='rotateX('+0+'deg) rotateY('+numy+'deg) rotateZ('+numx+'deg)'
