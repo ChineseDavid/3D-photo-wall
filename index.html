@@ -193,6 +193,8 @@
       padding: 5px;
       background: rgba(0, 153, 255, 0.642);
       border-radius: 5px;
+      text-align: center;
+      width: 95px;
     }
     .btn span{
       background: none;
@@ -253,6 +255,73 @@
       bottom: 40px;
       right: 40px;
       font-size: 20px;
+    }
+    .fluid{
+      position: relative;
+      overflow:hidden;
+      background: rgba(0, 153, 255, 0.842)
+    }
+    .fluid>span:nth-child(1){
+      display: block;
+      position: absolute;
+      top:0;
+      left:0;
+      width: 100%;
+      height: 3px;
+      /* background: rgba(0, 153, 255, 1); */
+      background: linear-gradient(to right, rgba(255,0,0,0), rgb(255, 0, 179)); 
+      animation: one 2s linear 0s infinite;
+    }
+    @keyframes one{
+      from{transform: translateX(-100%)}to{transform: translateX(100%)}
+    }
+    .fluid>span:nth-child(2){
+      display: block;
+      position: absolute;
+      top:0;
+      right:0;
+      width: 3px;
+      height: 100%;
+      background: rgba(0, 153, 255, 1);
+      background: linear-gradient(to bottom, rgba(255,0,0,0), rgb(255, 0, 179)); 
+      animation: two 2s linear 1s infinite;
+    }
+    @keyframes two{
+      from{transform: translateY(-100%)}to{transform: translateY(100%)}
+    }
+    .fluid>span:nth-child(3){
+      display: block;
+      position: absolute;
+      bottom:0;
+      left:0;
+      width: 100%;
+      height: 3px;
+      background: rgba(0, 153, 255, 1);
+      background: linear-gradient(to left, rgba(255,0,0,0), rgb(255, 0, 179)); 
+      animation: three 2s linear 0s infinite;
+    }
+    @keyframes three{
+      from{transform: translateX(100%)}to{transform: translateX(-100%)}
+    }
+    .fluid>span:nth-child(4){
+      display: block;
+      position: absolute;
+      top:0;
+      left:0;
+      width: 3px;
+      height: 100%;
+      background: rgba(0, 153, 255, 1);
+      background: linear-gradient(to top, rgba(255,0,0,0), rgb(255, 0, 179)); 
+      animation: four 2s linear 1s infinite;
+    }
+    @keyframes four{
+      from{transform: translateY(100%)}to{transform: translateY(-100%)}
+    }
+    .btnmain span,.btnkuai span,.auto span{
+      position: absolute;
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
     }
   </style>
 </head>
@@ -343,9 +412,24 @@
   <div class="text">3D Photo Wall</div>
   <div class="btn">
     <span>control：</span>
-    <div class="btnmain">above</div>
-    <div class="btnkuai">personal</div>
-    <div class="auto">auto</div>
+    <div class="btnmain fluid">above
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="btnkuai">personal
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="auto">auto
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
   </div>
   <div class="speed">
     <span>speed：</span>
@@ -378,30 +462,29 @@
     const auto=document.querySelector('.auto');//above按钮
     let autotime=false;
     let con='main';
-    e.setAttribute('style','background:rgba(0, 153, 255, 0.842)');
     //按钮点击控制-------------------------------------------------------------------
     d.onclick=function(){//相对自身旋转
       con='kuai';
-      e.setAttribute('style','background:rgba(0, 153, 255, 0.642)');
-      auto.setAttribute('style','background:rgba(0, 153, 255, 0.642)');
-      d.setAttribute('style','background:rgba(0, 153, 255, 0.842)');
+      e.setAttribute('class','btnmain');
+      auto.setAttribute('class','auto');
+      d.setAttribute('class','btnkuai fluid');
       clearInterval(autotime);
       autotime=false;
     }
     e.onclick=function(){//相对整体旋转
       con='main';
-      d.setAttribute('style','background:rgba(0, 153, 255, 0.642)');
-      auto.setAttribute('style','background:rgba(0, 153, 255, 0.642)');
-      e.setAttribute('style','background:rgba(0, 153, 255, 0.842)');
+      e.setAttribute('class','btnmain fluid');
+      auto.setAttribute('class','auto');
+      d.setAttribute('class','btnkuai');
       clearInterval(autotime);
       autotime=false;
     }
     const sspeed=document.querySelector('.sspeed');
     auto.onclick=function(){//自动旋转
       con='auto';
-      d.setAttribute('style','background:rgba(0, 153, 255, 0.642)');
-      e.setAttribute('style','background:rgba(0, 153, 255, 0.642)');
-      auto.setAttribute('style','background:rgba(0, 153, 255, 0.842)');
+      e.setAttribute('class','btnmain');
+      auto.setAttribute('class','auto fluid');
+      d.setAttribute('class','btnkuai');
       if(autotime==false){//自动旋转
         autotime=setInterval(() => {
           num+=sspeed.innerHTML/3;
